@@ -1,43 +1,48 @@
 #include <iostream>
-#include <string>
+#include <cmath>
+
+// zkusit bez break!!!
 
 int main()
 {
-    std::string input;
-    std::string answer;
+#include <iostream>
 
-    while (true)
+    int main()
     {
-        std::cout << "Write your age: " << std::endl;
-        std::cin >> input;
+        int number;
+        std::cout << "Zadejte cele cislo: ";
+        std::cin >> number;
 
-        std::cout << "You are " + input + " years old. Is that correct? (yes/no)" << std::endl;
-        std::cin >> answer;
-
-        if (answer == "yes")
+        if (number < 2)
         {
-            std::cout << "Perfect! You are verified." << std::endl;
-            break; // ukončí cyklus
-        }
-        else if (answer == "Yes")
-        {
-            std::cout << "Perfect! You are verified." << std::endl;
-            break; // ukončí cyklus
-        }
-        else if (answer == "no")
-        {
-            std::cout << "Let's try again.\n" << std::endl;
-            // cyklus pokračuje znovu od začátku
-        }
-        else if (answer == "No")
-        {
-            std::cout << "Let's try again.\n" << std::endl;
-            // cyklus pokračuje znovu od začátku
+            std::cout << "Cislo " << number << " neni prvocislo." << std::endl;
         }
         else
         {
-            std::cout << "I didn't understand your answer.\n" << std::endl;
+            bool isPrime = true;
+            int divisor = 2;
+
+            while (divisor * divisor <= number)
+            {
+                if (number % divisor == 0)
+                {
+                    isPrime = false;
+                    break;
+                }
+                divisor++;
+            }
+
+            if (isPrime)
+            {
+                std::cout << "Cislo " << number << " je prvocislo." << std::endl;
+            }
+            else
+            {
+                std::cout << "Cislo " << number << " neni prvocislo." << std::endl;
+            }
         }
+
+        return 0;
     }
 
     return 0;
