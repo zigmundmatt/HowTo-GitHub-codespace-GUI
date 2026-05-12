@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Glitch Dungeon</title>
+<style>
+body { font-family: monospace; background: black; color: white; }
+</style>
+</head>
+<body>
+<pre id="game"></pre>
+<script>
+// Game variables
+const WIDTH = 20;
+const HEIGHT = 10;
+let pX = 2, pY = 2;
+let gX = 15, gY = 8;
+let level = 1;
+
+function draw() {
+    let output = "--- GLITCH DUNGEON (Level: " + level + ") ---\n";
+    for (let y = 0; y < HEIGHT; y++) {
+        for (let x = 0; x < WIDTH; x++) {
+            if (Math.random() * 100 < level * 2) {
+                output += String.fromCharCode(33 + Math.floor(Math.random() * 60));
+            } else if (x === pX && y === pY) {
+                output += '<span style="color: green; font-weight: bold;">@</span>';
+            } else if (x === gX && y === gY) {
+                output += '<span style="color: red; font-weight: bold;">?</span>';
+            } else if (x === 0 || x === WIDTH - 1 || y === 0 || y === HEIGHT - 1) {
+                output += '#';
+            } else {
+                output += ' ';
+            }
+        }
+        output += '\n';
+    }
+    output += "Control with WASD. Try to reach the '?' before memory wipes... Press q to give up.\n";
+    document.getElementById('game').innerHTML = output;
+}
+
+document.addEventListener('keydown', function(e) {
+    let input = e.key.toLowerCase();
+    // Glitch: swap w and s on even levels
+    if (level % 2 === 0 && (input === 'w' || input === 's')) {
+        if (input === 'w') input = 's'; else input = 'w';
+    }
+    if (input === 'w' && pY > 1) pY--;
+    if (input === 's' && pY < HEIGHT - 2) pY++;
+    if (input === 'a' && pX > 1) pX--;
+    if (input === 'd' && pX < WIDTH - 2) pX++;
+    if (input === 'q') {
+        alert('Game over');
+        return;
+    }
+    // Teleport chance
+    let teleportChance = (level - 1) * 5;
+    if (teleportChance > 0 && Math.random() * 100 < teleportChance) {
+        pX = Math.floor(Math.random() * (WIDTH - 2)) + 1;
+        pY = Math.floor(Math.random() * (HEIGHT - 2)) + 1;
+    }
+    // Check win
+    if (pX === gX && pY === gY) {
+        level++;
+        pX = 2; pY = 2;
+        gX = Math.floor(Math.random() * (WIDTH - 2)) + 1;
+        gY = Math.floor(Math.random() * (HEIGHT - 2)) + 1;
+        // Beep? alert or something
+    }
+    draw();
+});
+
+// Initial draw
+draw();
+</script>
+</body>
+</html>
