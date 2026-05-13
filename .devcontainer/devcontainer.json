@@ -24,7 +24,10 @@
         "glenn2223.live-sass"
       ],
       "settings": {
-        "workbench.colorTheme": "Default Dark+"
+        "workbench.colorTheme": "Dark+",
+        "github.copilot.enable": {
+          "*": false
+        }
       }
     }
   },
